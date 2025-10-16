@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>For my dear friend 💖</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet" />
+<style>
+  * {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Poppins", sans-serif;
+  }
+
+  body {
+    height: 100vh;
+    width: 100vw;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    overflow: hidden;
+    transition: background 1s ease;
+    padding: 20px;
+  }
+
+  h1 {
+    font-size: 2rem;
+    color: #fff;
+    margin-bottom: 1rem;
+    line-height: 1.2;
+  }
+
+  p {
+    font-size: 1rem;
+    color: #fff;
+    margin-bottom: 1.5rem;
+  }
+
+  button {
+    background: #fff;
+    color: #444;
+    border: none;
+    border-radius: 30px;
+    padding: 12px 25px;
+    margin: 8px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: 0.3s;
+    width: 80%;
+    max-width: 250px;
+  }
+
+  button:hover {
+    transform: scale(1.05);
+  }
+
+  .hidden {
+    display: none;
+  }
+
+  .heart {
+    position: absolute;
+    color: #fff;
+    font-size: 22px;
+    animation: float 6s linear infinite;
+    z-index: 0;
+  }
+
+  @keyframes float {
+    0% {
+      transform: translateY(0) rotate(0);
+      opacity: 1;
+    }
+    100% {
+      transform: translateY(-100vh) rotate(720deg);
+      opacity: 0;
+    }
+  }
+
+  .glow {
+    text-shadow: 0 0 10px #fff, 0 0 25px #ff66b2;
+  }
+</style>
+</head>
+<body>
+
+<audio id="music" src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_4e2b17b8b1.mp3?filename=soft-piano-melody-110059.mp3" loop></audio>
+
+<!-- Page 1 -->
+<div id="page1">
+  <h1>For my dear friend 💖</h1>
+  <p>A tiny surprise made with lots of love...</p>
+  <button onclick="goToPage(2)">Enter 🎀</button>
+</div>
+
+<!-- Page 2 -->
+<div id="page2" class="hidden">
+  <h1>Naraj ho? 😔</h1>
+  <p>Tell me truly...</p>
+  <button onclick="showYes()">Yes 😢</button>
+  <button onclick="showNo()">No 😅</button>
+</div>
+
+<!-- Page 2A: Yes -->
+<div id="yesPage" class="hidden">
+  <h1>Sorry na yaar 🥺💐</h1>
+  <p>You know I never want to see you upset.</p>
+  <button onclick="goToPage(3)">Here’s something for you 💝</button><br />
+  <button onclick="backToMood()">⬅️ Back</button>
+</div>
+
+<!-- Page 2B: No -->
+<div id="noPage" class="hidden">
+  <h1>Ok 😅</h1>
+  <p>Then let’s make today even more special!</p>
+  <button onclick="goToPage(3)">Here’s something for you 💝</button><br />
+  <button onclick="backToMood()">⬅️ Back</button>
+</div>
+
+<!-- Page 3 -->
+<div id="page3" class="hidden">
+  <h1 class="glow">🎉 Happy Birthday, Mahii 🎂</h1>
+  <p style="font-size:1.1rem; max-width:90%; margin:auto; color:#fff;">
+    You’re that little sparkle that makes every moment shine brighter.<br />
+    May your days be as soft as smiles,<br />
+    and your dreams as true as your heart.<br /><br />
+    You deserve every good thing this world can give 💫<br /><br />
+    <em>This isn’t just a wish... it’s a small piece of happiness made only for you 💕</em>
+  </p>
+</div>
+
+<script>
+  const pages = ["page1", "page2", "yesPage", "noPage", "page3"];
+  const music = document.getElementById("music");
+  let heartsInterval;
+
+  function goToPage(num) {
+    pages.forEach((id) => document.getElementById(id).classList.add("hidden"));
+    document.body.style.background = getBackground(num);
+    document.getElementById(`page${num}`).classList.remove("hidden");
+
+    if (num === 3) {
+      startHearts();
+      music.play();
+    } else {
+      stopHearts();
+      music.pause();
+      music.currentTime = 0;
+    }
+  }
+
+  function showYes() {
+    hideAll();
+    document.getElementById("yesPage").classList.remove("hidden");
+    document.body.style.background =
+      "linear-gradient(135deg, #ffd6e7, #fff2f2)";
+  }
+
+  function showNo() {
+    hideAll();
+    document.getElementById("noPage").classList.remove("hidden");
+    document.body.style.background =
+      "linear-gradient(135deg, #d6f5ff, #e6e6ff)";
+  }
+
+  function backToMood() {
+    hideAll();
+    document.getElementById("page2").classList.remove("hidden");
+    document.body.style.background = getBackground(2);
+  }
+
+  function hideAll() {
+    pages.forEach((id) => document.getElementById(id).classList.add("hidden"));
+  }
+
+  function getBackground(num) {
+    switch (num) {
+      case 1:
+        return "linear-gradient(135deg, #ffb6c1, #a2d2ff)";
+      case 2:
+        return "linear-gradient(135deg, #d9a7c7, #fffcdc)";
+      case 3:
+        return "linear-gradient(135deg, #a1c4fd, #c2e9fb)";
+      default:
+        return "#fbc2eb";
+    }
+  }
+
+  function startHearts() {
+    heartsInterval = setInterval(() => {
+      const heart = document.createElement("div");
+      heart.classList.add("heart");
+      heart.innerText = "💖";
+      heart.style.left = Math.random() * 100 + "vw";
+      heart.style.fontSize = Math.random() * 18 + 18 + "px";
+      heart.style.animationDuration = 4 + Math.random() * 3 + "s";
+      document.body.appendChild(heart);
+      setTimeout(() => heart.remove(), 6000);
+    }, 300);
+  }
+
+  function stopHearts() {
+    clearInterval(heartsInterval);
+  }
+
+  document.body.style.background = getBackground(1);
+</script>
+</body>
+</html>
