@@ -1,0 +1,260 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>For my dear friend 💖</title>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap" rel="stylesheet">
+<style>
+  *{box-sizing:border-box;margin:0;padding:0;font-family:'Poppins',sans-serif}
+  html,body{height:100%}
+  body{
+    min-height:100vh;
+    width:100%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    padding:22px;
+    overflow:hidden;
+    transition:background 800ms ease;
+  }
+
+  /* Pages container */
+  .card{
+    width:100%;
+    max-width:420px;
+    height:calc(100vh - 44px);
+    background:transparent;
+    border-radius:18px;
+    padding:22px;
+    position:relative;
+    display:flex;
+    flex-direction:column;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+  }
+
+  h1{color:#fff;font-size:1.9rem;line-height:1.15;margin-bottom:10px;text-shadow:0 6px 18px rgba(0,0,0,0.12)}
+  p{color:#fff;font-size:1.05rem;margin-bottom:16px;opacity:0.95}
+
+  /* Buttons (mobile friendly) */
+  .btn{
+    width:86%;
+    max-width:300px;
+    padding:14px 18px;
+    border-radius:30px;
+    border:0;
+    font-weight:600;
+    font-size:1rem;
+    cursor:pointer;
+    margin:8px 0;
+    box-shadow:0 6px 18px rgba(0,0,0,0.12);
+    background:rgba(255,255,255,0.95);
+    color:#333;
+  }
+  .btn:active{transform:scale(.995)}
+  .small-btn{width:60%;max-width:200px;padding:11px}
+
+  /* hidden pages */
+  .hidden{display:none}
+
+  /* teddy images floating (soft) */
+  .float-teddy{
+    position:absolute;
+    width:80px;
+    max-width:20%;
+    opacity:0.9;
+    filter:drop-shadow(0 8px 18px rgba(0,0,0,0.18));
+    transform-origin:center;
+    animation:floaty 6s ease-in-out infinite;
+    z-index:0;
+  }
+  .teddy-large{
+    width:52%;
+    max-width:300px;
+    border-radius:18px;
+    filter:drop-shadow(0 20px 35px rgba(0,0,0,0.25));
+    margin-bottom:12px;
+  }
+
+  @keyframes floaty {
+    0%{transform:translateY(0) rotate(-3deg)}
+    50%{transform:translateY(-18px) rotate(3deg)}
+    100%{transform:translateY(0) rotate(-3deg)}
+  }
+
+  /* confetti and hearts that fall (final page) */
+  .confetti, .heart-emoji {
+    position:absolute;
+    font-size:20px;
+    will-change:transform,opacity;
+    z-index:0;
+    user-select:none;
+    pointer-events:none;
+    animation:upfade linear forwards;
+  }
+  @keyframes upfade {
+    from{transform:translateY(0) scale(1);opacity:1}
+    to{transform:translateY(-110vh) scale(.8);opacity:0}
+  }
+
+  /* final page glow */
+  .glow{
+    text-shadow:0 6px 22px rgba(255,255,255,0.25), 0 0 30px rgba(255,102,178,0.18);
+    font-weight:700;
+  }
+
+  /* small responsive tweaks */
+  @media (max-width:360px){
+    h1{font-size:1.6rem}
+    .float-teddy{width:72px}
+    .teddy-large{width:64%}
+  }
+
+</style>
+</head>
+<body>
+
+<!-- audio (preload but will play only when user triggers final page) -->
+<audio id="music" preload="auto" loop>
+  <source src="https://cdn.pixabay.com/download/audio/2022/03/15/audio_4e2b17b8b1.mp3?filename=soft-piano-melody-110059.mp3" type="audio/mpeg">
+  <!-- fallback: browsers may ignore autoplay until user interacts -->
+</audio>
+
+<!-- single container used for pages -->
+<div class="card" id="page1">
+  <!-- floating teddies (page1) -->
+  <img class="float-teddy" id="t1" src="https://cdn.pixabay.com/photo/2014/12/10/10/04/teddy-562960_1280.jpg" style="left:8%;top:12%;opacity:.95;">
+  <img class="float-teddy" id="t2" src="https://cdn.pixabay.com/photo/2015/06/04/16/22/teddy-bear-797577_640.jpg" style="right:8%;top:22%;opacity:.95;transform:scale(.92)">
+  <h1>For my dear friend 💖</h1>
+  <p>A tiny surprise made with lots of love... Tap Enter to open it 🎀</p>
+  <button class="btn" onclick="goTo('mood')">Enter 🎀</button>
+</div>
+
+<!-- Mood question page -->
+<div class="card hidden" id="mood">
+  <img class="float-teddy" src="https://cdn.pixabay.com/photo/2015/06/04/16/22/teddy-bear-797577_640.jpg" style="left:6%;top:10%;width:72px;opacity:.8">
+  <h1>Naraj ho? 😔</h1>
+  <p>Tell me honestly</p>
+  <button class="btn" onclick="showAnswer('yes')">Yes 😢</button>
+  <button class="btn" onclick="showAnswer('no')">No 😅</button>
+</div>
+
+<!-- Yes page -->
+<div class="card hidden" id="yes">
+  <img class="float-teddy" src="https://cdn.pixabay.com/photo/2014/12/10/10/04/teddy-562960_1280.jpg" style="left:10%;top:10%;width:78px;opacity:.9">
+  <h1>Sorry na yaar 🥺💐</h1>
+  <p>I wish to make it up with something sweet</p>
+  <button class="btn" onclick="goTo('final')">Here’s something for you 💝</button>
+  <button class="btn small-btn" onclick="goTo('mood')">⬅️ Back</button>
+</div>
+
+<!-- No page -->
+<div class="card hidden" id="no">
+  <img class="float-teddy" src="https://cdn.pixabay.com/photo/2015/06/04/16/22/teddy-bear-797577_640.jpg" style="right:10%;top:12%;width:78px;opacity:.9">
+  <h1>Ok 😅</h1>
+  <p>Then let’s make today an extra special one!</p>
+  <button class="btn" onclick="goTo('final')">Here’s something for you 💝</button>
+  <button class="btn small-btn" onclick="goTo('mood')">⬅️ Back</button>
+</div>
+
+<!-- Final birthday page -->
+<div class="card hidden" id="final">
+  <img class="teddy-large" id="bigTeddy" src="https://cdn.pixabay.com/photo/2014/12/10/10/04/teddy-562960_1280.jpg" alt="teddy" style="z-index:1;background:transparent">
+  <h1 class="glow">🎉 Happy Birthday, Mahii 🎂</h1>
+  <p style="max-width:90%;margin:auto;">
+    You’re that little sparkle that makes every moment shine brighter.<br><br>
+    May your days be as soft as smiles,<br>
+    and your dreams as true as your heart.<br><br>
+    You deserve every good thing this world can give 💫<br><br>
+    <em>This isn’t just a wish... it’s a small piece of happiness made only for you 💕</em>
+  </p>
+  <button class="btn" onclick="replay()">Play Again</button>
+</div>
+
+<script>
+  // page flow helper
+  function goTo(name){
+    // hide all
+    ['page1','mood','yes','no','final'].forEach(id => {
+      document.getElementById(id).classList.add('hidden');
+    });
+    // show chosen
+    if(name === 'mood'){ document.getElementById('mood').classList.remove('hidden'); document.body.style.background = "linear-gradient(135deg,#f6d1e6,#d7f1ff)"; }
+    if(name === 'page1'){ document.getElementById('page1').classList.remove('hidden'); document.body.style.background = "linear-gradient(135deg,#ffd6e7,#a2d2ff)"; }
+    if(name === 'yes'){ document.getElementById('yes').classList.remove('hidden'); document.body.style.background = "linear-gradient(135deg,#ffdfe8,#fff7f0)"; }
+    if(name === 'no'){ document.getElementById('no').classList.remove('hidden'); document.body.style.background = "linear-gradient(135deg,#d6f5ff,#e6e6ff)"; }
+    if(name === 'final'){ document.getElementById('final').classList.remove('hidden'); document.body.style.background = "linear-gradient(135deg,#89f7fe,#66a6ff)"; startFinal(); }
+  }
+
+  // show yes/no result
+  function showAnswer(ans){
+    if(ans === 'yes') goTo('yes');
+    else goTo('no');
+  }
+
+  // initial background
+  document.body.style.background = "linear-gradient(135deg,#ffd6e7,#a2d2ff)";
+
+  // final page behaviors: hearts/confetti + music
+  const music = document.getElementById('music');
+  let confettiTimer = null;
+
+  function startFinal(){
+    // ensure any previous stopped
+    stopConfetti();
+    // small delay to ensure user-trigger context (user already clicked)
+    try { music.currentTime = 0; music.play(); } catch(e){ /* some browsers require explicit user gesture; but clicking buttons qualifies */ }
+
+    // spawn confetti/emoji up-moving pieces
+    const icons = ["✨","🎊","💫","🌸","🎈","💖"];
+    confettiTimer = setInterval(()=>{
+      const el = document.createElement('div');
+      el.className = Math.random()>.5 ? 'confetti' : 'heart-emoji';
+      el.style.left = (Math.random()*82 + 6) + 'vw';
+      el.style.top = '92vh';
+      el.style.fontSize = (Math.random()*18 + 18) + 'px';
+      el.style.opacity = 1;
+      el.innerText = icons[Math.floor(Math.random()*icons.length)];
+      el.style.animationDuration = (4 + Math.random()*3) + 's';
+      document.body.appendChild(el);
+      // remove later
+      setTimeout(()=> {
+        try{ el.remove(); }catch(e){}
+      },7000);
+    }, 300);
+
+    // animate a few floating teddy clones on final too (gentle)
+    for(let i=0;i<3;i++){
+      const t = document.createElement('img');
+      t.src = (i%2===0)
+        ? 'https://cdn.pixabay.com/photo/2015/06/04/16/22/teddy-bear-797577_640.jpg'
+        : 'https://cdn.pixabay.com/photo/2014/12/10/10/04/teddy-562960_1280.jpg';
+      t.className = 'float-teddy';
+      t.style.left = (10 + i*22) + '%';
+      t.style.top = (10 + i*8) + '%';
+      t.style.opacity = .95;
+      t.style.width = (80 - i*12) + 'px';
+      document.body.appendChild(t);
+      setTimeout(()=>{ try{ t.remove(); }catch(e){} },7000);
+    }
+  }
+
+  function stopConfetti(){
+    clearInterval(confettiTimer);
+    // remove any left elements
+    document.querySelectorAll('.confetti, .heart-emoji').forEach(n=>n.remove());
+  }
+
+  // replay: restart final visuals and music
+  function replay(){
+    stopConfetti();
+    startFinal();
+  }
+
+  // make Enter start at page1 -> safe default
+  // show page1 initially (already visible)
+</script>
+</body>
+  </html>
